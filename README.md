@@ -58,7 +58,7 @@ For both machines, we will use a GitHub personal access token to authenticate th
 1. Download and unzip the latest release from the [releases page](https://github.com/andrsdt/ccgists/releases)
 
 ```sh
-wget -q https://github.com/andrsdt/ccgists/releases/download/v1.0.0/worker.tar.gz
+wget -q https://github.com/andrsdt/ccgists/releases/latest/download/worker.tar.gz
 mkdir ~/.worker; tar -xf worker.tar.gz -C ~/.worker; rm worker.tar.gz
 cd .worker
 ```
@@ -101,7 +101,7 @@ The controller's entry point is a Python script in `controller/src/main.py`. The
 1. Download and unzip the latest release from the [releases page](https://github.com/andrsdt/ccgists/releases)
 
 ```sh
-wget https://github.com/andrsdt/ccgists/releases/download/v1.0.0/controller.tar.gz
+wget https://github.com/andrsdt/ccgists/releases/latest/download/controller.tar.gz
 mkdir ccgists; tar -xf controller.tar.gz -C ccgists
 cd ccgists
 ```
