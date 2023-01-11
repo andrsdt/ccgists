@@ -52,6 +52,20 @@ def get_comments(gist_id, cipher=True):
 
     return json
 
+def create_gist(description, body, file_name=None):
+    file_name = file_name if file_name != None else description.split(' ')[1].lower() + ".md"
+    data = {
+        "description": description,
+        "public": False,
+        "files": {
+            file_name: {
+                "content": body
+            }
+        }
+    }
+
+    response = requests.post(base_url, headers=base_headers, json=data)
+    return response.status_code, response.reason
 
 def create_comment(gist_id, comment, cipher=True):
     body = caesar_encrypt(comment, steganography.caesar_constant) if cipher else comment

