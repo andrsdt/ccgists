@@ -43,6 +43,8 @@ This repository contains the code for the **ccgists** project, which is composed
 
 The communication is done entirely through GitHub Gists. There is a gist disguised as **a celebration for the Pi Day**, where infected computers will post their status. When the attacker sends a command to an infected machine, it creates a gist disguised as **a mathematician's biography** that will be used as a thread for that communication. Commands and outputs with that machine will be encoded as emojis.
 
+![](https://i.imgur.com/JSsuHea.gif)
+
 <!-- GETTING STARTED -->
 
 ## Getting Started
@@ -138,8 +140,6 @@ python3 ./src/main.py
 ## Usage
 
 The script is intuitive to use, and it will show a menu with the available options. The menu will show the available agents, and the user can select one of them to send commands to it. These will be processed as soon as the infected machine runs the script again.
-
-![](https://i.imgur.com/JSsuHea.gif)
 
 _For any doubt in the usage, do not hesitate to contact me_
 
